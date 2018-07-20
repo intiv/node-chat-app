@@ -10,14 +10,17 @@ socket.on('disconnect', function() {
 
 socket.on('newMessage', function(msg) {
     console.log('New message', msg);
+    let li = jQuery('<li></li>');
+    li.text(`${msg.from}: ${msg.text}`)
+    jQuery('#messages').append(li);
 });
 
+jQuery('#message-form').on('submit', function(e){
+    e.preventDefault();
+    socket.emit('createMessage', {
+        from: 'User',
+        text: jQuery('[name=message]').val()
+    }, function() {
 
-// socket.on('newEmail', function(email) {
-//     console.log('New Email', email);
-// });
-
-// socket.emit('createEmail', {
-//     to: 'inti@yahoo.com',
-//     text: 'holis'
-// });
+    });
+});
